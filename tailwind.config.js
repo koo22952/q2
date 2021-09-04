@@ -5,7 +5,7 @@ module.exports = {
     extend: {
       backgroundColor: {},
       width: {
-        400: '400px',
+        510: '510px',
       },
     },
   },

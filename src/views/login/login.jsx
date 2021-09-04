@@ -1,23 +1,26 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Link, useHistory } from 'react-router-dom'
 import Input from '../../components/input'
 
 function Login(props) {
+  const [form, setForm] = useState({})
+
   const onSubmit = (e) => {
-    console.log(e)
+    console.log(form)
     e.preventDefault()
   }
 
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-100">
-      <div className="w-400	p-8 m-8 bg-white shadow-md rounded-md">
+      <div className="w-510	p-8 m-8  bg-white shadow-md rounded-md">
         <div className="font-bold text-2xl text-center mb-4">登入</div>
         <Input
           className="mb-4"
           label="帳號"
-          htmlType="username"
+          htmlType="account"
           InputType="text"
           placeholder="請輸入帳號"
+          setForm={setForm}
         />
         <Input
           className="mb-4"
@@ -26,6 +29,7 @@ function Login(props) {
           InputType="password"
           placeholder="請輸入密碼"
           showEye
+          setForm={setForm}
         />
         <div className="text-center mt-6">
           <div className="text-center mb-4">
