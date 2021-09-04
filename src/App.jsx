@@ -7,7 +7,7 @@ import {
   Redirect,
 } from 'react-router-dom'
 
-// 共有模板
+// 共有模版
 const DefaultLayout = lazy(() =>
   import(/* webpackChunkName: 'default' */ './container/defaultLayer')
 )
