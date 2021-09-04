@@ -1,7 +1,7 @@
 import React from 'react'
 
 function Home(props) {
-  return <div>首頁</div>
+  return <div className="px-4 py-2">首頁</div>
 }
 
 export default Home
