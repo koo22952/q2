@@ -4,6 +4,9 @@ module.exports = {
   theme: {
     extend: {
       backgroundColor: {},
+      width: {
+        400: '400px',
+      },
     },
   },
   variants: {
