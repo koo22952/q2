@@ -3,7 +3,6 @@ import {
   BrowserRouter as Router,
   Switch,
   Route,
-  Link,
   Redirect,
 } from 'react-router-dom'
 
@@ -26,20 +25,6 @@ const View404 = lazy(() =>
 function App() {
   return (
     <Router>
-      {/*<ul>*/}
-      {/*  <li>*/}
-      {/*    <Link to="/">home</Link>*/}
-      {/*  </li>*/}
-      {/*  <li>*/}
-      {/*    <Link to="/news">news</Link>*/}
-      {/*  </li>*/}
-      {/*  <li>*/}
-      {/*    <Link to="/login">login</Link>*/}
-      {/*  </li>*/}
-      {/*  <li>*/}
-      {/*    <Link to="/register">register</Link>*/}
-      {/*  </li>*/}
-      {/*</ul>*/}
       <Suspense fallback={() => <span>Loading</span>}>
         <Switch>
           <Route path="/" exact render={() => <Redirect to="/home" />} />
