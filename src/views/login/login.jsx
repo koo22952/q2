@@ -2,12 +2,13 @@ import React, { useEffect, useState } from 'react'
 import { Link, useHistory } from 'react-router-dom'
 import Input from '../../components/input'
 import axios from 'axios'
+import loading from '../../components/loading'
+import toast from '../../components/toast'
 
 function Login(props) {
   const [form, setForm] = useState({})
 
   const onSubmit = async (e) => {
-    console.log(form)
     // await axios
     //   .post('/api/login', {
     //     username: '1123',
