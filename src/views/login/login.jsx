@@ -8,9 +8,14 @@ import toast from '../../components/toast'
 function Login(props) {
   const [form, setForm] = useState({})
 
-  // useEffect(() => {
-  //   loading.start()
-  // }, [])
+  const onChange = (value, name) => {
+    setForm((pre) => {
+      return {
+        ...pre,
+        [name]: value,
+      }
+    })
+  }
 
   const onSubmit = async (e) => {
     // await axios
@@ -33,10 +38,10 @@ function Login(props) {
           <Input
             className="mb-4"
             label="帳號"
-            name="account"
+            name="username"
             InputType="text"
             placeholder="請輸入帳號"
-            setForm={setForm}
+            onChange={onChange}
           />
           <Input
             className="mb-4"
@@ -45,7 +50,7 @@ function Login(props) {
             InputType="password"
             placeholder="請輸入密碼"
             showEye
-            setForm={setForm}
+            onChange={onChange}
           />
           <div className="text-center mt-6">
             <div className="text-center mb-4">

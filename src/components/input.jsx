@@ -10,7 +10,6 @@ import EyesOn from '../assets/eyes-on'
   name  label input ID 串聯的type & input 欄位名稱
   InputType  input 屬性
   showEye  是否呈現 密碼的眼睛（主要為密碼用）
-  setForm  取得 input value
   required 是否為必填
 */
 
@@ -22,58 +21,13 @@ function Input({
   name,
   InputType,
   showEye = false,
-  setForm = () => {},
   required = false,
-  valid,
+
+  onChange,
+  verify,
   isUse = false, //是否有輸入過
-  isSamePassword = true,
 }) {
   const [look, setLook] = useState(false)
-
-  const checkValidatorRule = (value, type) => {
-    if (!value && !!required) {
-      return '必填'
-    }
-
-    if (type === 'email') {
-      if (!/^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$/.test(value)) {
-        return `必須是email格式`
-      }
-    }
-
-    if (type.includes('password')) {
-      if (
-        !/^[A-z]\d{2,6}[A-z]$/.test(value) ||
-        value.length < 4 ||
-        value.length > 8
-      ) {
-        console.log('密碼格式錯誤')
-        return `密碼格式錯誤`
-      }
-    }
-
-    console.log(isUse, isSamePassword)
-    if (type === 'password') {
-      if (isUse && !isSamePassword) {
-        console.log('必須與密碼相同')
-      }
-    }
-    return ''
-  }
-
-  const onChang = (e, name, type) => {
-    setForm((pre) => {
-      return {
-        ...pre,
-        [name]: {
-          value: e.target.value,
-          isUse: true, //是否有輸入過
-          pass: !!checkValidatorRule(e.target.value, type),
-          message: checkValidatorRule(e.target.value, type),
-        },
-      }
-    })
-  }
 
   return (
     <div className={`relative flex items-baseline w-full ${className}`}>
@@ -87,10 +41,12 @@ function Input({
             id={name}
             type={showEye ? (look ? 'text' : 'password') : InputType}
             className={`appearance-none w-full block px-3 py-2 border border-gray-300 text-gray-900 ${
-              isUse && !valid && 'border-red-500'
+              isUse &&
+              !verify?.isPass &&
+              'border-red-500 focus:ring-red-500 focus:border-red-500'
             } focus:outline-none focus:ring-gray-500 focus:border-gray-500`}
             placeholder={placeholder}
-            onChange={(e) => onChang(e, name, InputType)}
+            onChange={(e) => onChange(e.target.value, name)}
           />
           {showEye &&
             (look ? (
@@ -110,8 +66,8 @@ function Input({
             ))}
         </div>
 
-        {valid && required ? (
-          <div className="text-red-500 text-sm">{'123'}</div>
+        {!verify?.isPass && required ? (
+          <div className="text-red-500 text-sm">{verify?.message}</div>
         ) : null}
       </div>
     </div>

@@ -3,10 +3,70 @@ import { Link, useHistory } from 'react-router-dom'
 import Input from '../../components/input'
 
 function Register(props) {
-  const [form, setForm] = useState({})
+  const [form, setForm] = useState({
+    username: '',
+    password: '',
+    rePassword: '',
+  })
+
   const onSubmit = (e) => {
     e.preventDefault()
     console.log(form)
+  }
+
+  const checkValidatorRule = (value, name) => {
+    let usernameIsPass = /^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$/.test(value)
+    let passwordIsPass = /^[A-z]\d{2,6}[A-z]$/.test(value)
+    if (!value) {
+      return {
+        isPass: false,
+        message: '輸入任意值',
+      }
+    }
+
+    if (name === 'username') {
+      return {
+        isPass: usernameIsPass,
+        message: usernameIsPass ? '' : '格式有誤',
+      }
+    }
+
+    if (name.includes('assword')) {
+      if (value.length < 4 || value.length > 8) {
+        return {
+          isPass: false,
+          message: '密碼長度錯誤',
+        }
+      }
+
+      if (name === 'rePassword' && passwordIsPass) {
+        if (form.password?.value !== value) {
+          return {
+            isPass: false,
+            message: '需要與密碼一致',
+          }
+        }
+      }
+
+      return {
+        isPass: passwordIsPass,
+        message: passwordIsPass ? '' : '格式有誤',
+      }
+    }
+  }
+
+  const onChange = (value, name) => {
+    setForm((pre) => {
+      return {
+        ...pre,
+        [name]: {
+          ...pre[name],
+          value,
+          isUse: true,
+          verify: checkValidatorRule(value, name),
+        },
+      }
+    })
   }
 
   return (
@@ -17,13 +77,13 @@ function Register(props) {
           className="mb-4"
           label="帳號"
           labelClassName="w-16"
-          name="account"
+          name="username"
           InputType="email"
           placeholder="必須是信箱"
-          setForm={setForm}
           required
-          valid={form?.account?.pass}
-          isUse={form?.account?.isUse}
+          onChange={onChange}
+          isUse={form.username?.isUse || false}
+          verify={form.username?.verify}
         />
         <Input
           className="mb-4"
@@ -33,8 +93,10 @@ function Register(props) {
           InputType="password"
           placeholder="4-8字元；首尾必須是英文；中間必須是數字"
           showEye
-          setForm={setForm}
           required
+          onChange={onChange}
+          isUse={form.password?.isUse || false}
+          verify={form.password?.verify}
         />
         <Input
           className="mb-4"
@@ -44,10 +106,10 @@ function Register(props) {
           InputType="password"
           placeholder="4-8字元；首尾必須是英文；中間必須是數字"
           showEye
-          setForm={setForm}
           required
-          isUse={form?.rePassword?.isUse}
-          isSamePassword={form.rePassword?.value === form.password?.value}
+          onChange={onChange}
+          isUse={form.rePassword?.isUse || false}
+          verify={form.rePassword?.verify}
         />
         <div className="text-center mt-6">
           <div className="text-center mb-4">
