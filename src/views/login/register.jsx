@@ -1,17 +1,60 @@
 import React, { useState } from 'react'
 import { Link, useHistory } from 'react-router-dom'
 import Input from '../../components/input'
+import axios from 'axios'
+import loading from '../../components/loading'
+import toast from '../../components/toast'
 
 function Register(props) {
+  const history = useHistory()
   const [form, setForm] = useState({
     username: '',
     password: '',
     rePassword: '',
   })
 
-  const onSubmit = (e) => {
-    e.preventDefault()
-    console.log(form)
+  const fetchRegister = async () => {
+    loading.start()
+
+    await axios
+      .post('/api/register', {
+        username: form.username?.value,
+        password: form.password?.value,
+      })
+      .then(({ data }) => {
+        if (data.success) {
+          toast.success(data.message)
+          fetchLogin()
+        } else {
+          toast.error(data.message)
+        }
+      })
+      .catch((err) => {
+        console.log(err)
+        localStorage.removeItem('userToken')
+      })
+      .finally(() => loading.end())
+  }
+
+  const fetchLogin = async () => {
+    await axios
+      .post('/api/login', {
+        username: form.username?.value,
+        password: form.password?.value,
+      })
+      .then(({ data }) => {
+        if (data.success) {
+          localStorage.setItem('userToken', data.token)
+        } else {
+          toast.error(data.message)
+          history.push('/login')
+        }
+      })
+      .catch((err) => {
+        console.log(err)
+        localStorage.removeItem('userToken')
+      })
+      .finally(() => history.push('/'))
   }
 
   const checkValidatorRule = (value, name) => {
@@ -53,6 +96,24 @@ function Register(props) {
         message: passwordIsPass ? '' : '格式有誤',
       }
     }
+  }
+
+  const onSubmit = async (e) => {
+    e.preventDefault()
+
+    let isPass = true
+    for (let name in form) {
+      if (!form[name].isUse) {
+        isPass = false
+        onChange('', name)
+      }
+      if (!form[name]?.value || !form[name]?.verify?.isPass) {
+        isPass = false
+      }
+    }
+
+    if (!isPass) return
+    await fetchRegister()
   }
 
   const onChange = (value, name) => {

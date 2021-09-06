@@ -6,7 +6,10 @@ import loading from '../../components/loading'
 import toast from '../../components/toast'
 
 function Login(props) {
-  const [form, setForm] = useState({})
+  const [form, setForm] = useState({
+    username: '',
+    password: '',
+  })
 
   const onChange = (value, name) => {
     setForm((pre) => {
@@ -18,16 +21,31 @@ function Login(props) {
   }
 
   const onSubmit = async (e) => {
-    // await axios
-    //   .post('/api/login', {
-    //     username: '1123',
-    //     password: '123132',
-    //   })
-    //   .then((res) => {
-    //     console.log(res)
-    //   })
-
     e.preventDefault()
+
+    if (!form.username || !form.password) {
+      toast.error('請輸入帳號密碼')
+      return
+    }
+
+    await axios
+      .post('/api/login', {
+        username: form.username,
+        password: form.password,
+      })
+      .then(({ data }) => {
+        if (data.success) {
+          localStorage.setItem('userToken', data.token)
+          toast.success(data.message)
+        } else {
+          toast.error(data.message)
+        }
+      })
+      .catch((err) => {
+        console.log(err)
+        localStorage.removeItem('userToken')
+      })
+      .finally(() => history.push('/'))
   }
 
   return (
