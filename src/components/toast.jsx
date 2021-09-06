@@ -35,6 +35,7 @@ function Notice({ type, msg }) {
 let time
 
 /*
+todo
   缺乏向下移動的問題，toast 只堆疊在同一個地方
 */
 function createNotification(type, msg, duration = 2) {

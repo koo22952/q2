@@ -1,12 +1,19 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 
+/*
+todo
+  雙層圈漸變
+  時間差漸變
+ */
 function Loading(props) {
   return (
     <>
-      <div className="absolute h-3 w-3 ">
-        <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75" />
-        <span className="relative inline-flex rounded-full h-3 w-3 bg-blue-500" />
+      <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 h-16 w-16">
+        <span className="animate-ping absolute h-full w-full rounded-full bg-blue-400 opacity-75" />
+        <span className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 h-4 w-4">
+          <span className="animate-ping absolute h-full w-full rounded-full bg-blue-500" />
+        </span>
       </div>
       <div className="h-full w-full bg-gray-200 opacity-20" />
     </>
