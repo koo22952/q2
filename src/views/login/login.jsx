@@ -1,30 +1,27 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Link, useHistory } from 'react-router-dom'
 import Input from '../../components/input'
 import axios from 'axios'
-import Toast from '../../components/toast'
 
 function Login(props) {
   const [form, setForm] = useState({})
 
   const onSubmit = async (e) => {
     console.log(form)
-
-    await axios
-      .post('/api/login', {
-        username: '1123',
-        password: '123132',
-      })
-      .then((res) => {
-        console.log(res)
-      })
+    // await axios
+    //   .post('/api/login', {
+    //     username: '1123',
+    //     password: '123132',
+    //   })
+    //   .then((res) => {
+    //     console.log(res)
+    //   })
 
     e.preventDefault()
   }
 
   return (
     <>
-      <Toast></Toast>
       <div className="flex items-center justify-center min-h-screen bg-gray-100">
         <div className="w-520	p-8 m-8  bg-white shadow-md rounded-md">
           <div className="font-bold text-2xl text-center mb-4">登入</div>
