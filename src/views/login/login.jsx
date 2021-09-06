@@ -8,6 +8,10 @@ import toast from '../../components/toast'
 function Login(props) {
   const [form, setForm] = useState({})
 
+  // useEffect(() => {
+  //   loading.start()
+  // }, [])
+
   const onSubmit = async (e) => {
     // await axios
     //   .post('/api/login', {
