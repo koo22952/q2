@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 export const request = axios.create({
-  baseURL: '/api',
+  baseURL: 'https://l8-upgrade-apis.vercel.app/api',
   timeout: 5000,
 })
 
@@ -39,7 +39,6 @@ request.interceptors.response.use(
       default:
         console.log('就是發生了錯誤！')
     }
-
-    return Promise.reject(error)
+    return Promise.reject(error.response)
   }
 )
