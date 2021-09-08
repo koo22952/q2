@@ -6,7 +6,7 @@ todo
   雙層圈漸變
   時間差漸變
  */
-function Loading(props) {
+function Loading() {
   return (
     <>
       <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 h-16 w-16">
@@ -21,14 +21,15 @@ function Loading(props) {
 }
 
 function createLoading(type) {
-  if (type === 'start') {
+  const el = document.getElementById('loading')
+  if (type === 'start' && el === null) {
     const div = document.createElement('div')
     div.id = 'loading'
     div.className = 'absolute inset-0'
     document.body.appendChild(div)
     ReactDOM.render(<Loading />, div)
   }
-  if (type === 'end') {
+  if (type === 'end' && el !== null) {
     const removeDiv = document.getElementById('loading')
     if (removeDiv === null) return
     removeDiv.remove()

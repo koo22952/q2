@@ -15,7 +15,7 @@ link8_fontEnd 學習計畫 Q1 21/9/1
 7. login api 都一樣，請復用
 8. ~~toast 的 time 變量毫無意義~~
 9. ~~success/error toast 除了 icon 不一樣外都一樣，寫一起不香嗎？~~
-10. loading 組件實現看來有問題呀，多個 start 不該是疊加，是復用吧？
+10. ~~loading 組件實現看來有問題呀，多個 start 不該是疊加，是復用吧？~~
 11. 你的 input 組件有寫 prop 是幹嘛的註解，這種註解一律建議使用 jsdoc 來寫
 12. 看你有封裝 input 組件，那建議驗證也在組件內驗證，看要 input 組件驗證，還是 form 驗證皆可
 13. 等驗證完在進頁面，不要沒驗證完就進，那驗證的意義就沒了
