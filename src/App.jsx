@@ -7,20 +7,12 @@ import {
 } from 'react-router-dom'
 
 // 共有模版
-const DefaultLayout = lazy(() =>
-  import(/* webpackChunkName: 'default' */ './container/defaultLayer')
-)
+const DefaultLayout = lazy(() => import('./container/defaultLayer'))
 
 // 基礎頁面
-const Login = lazy(() =>
-  import(/*webpackChunkName: login */ './views/login/login.jsx')
-)
-const Register = lazy(() =>
-  import(/*webpackChunkName: Register */ './views/login/register.jsx')
-)
-const View404 = lazy(() =>
-  import(/* webpackChunkName: '404' */ './views/Others/404')
-)
+const Login = lazy(() => import('./views/login/login.jsx'))
+const Register = lazy(() => import('./views/login/register.jsx'))
+const View404 = lazy(() => import('./views/Others/404'))
 
 function App() {
   return (
