@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import ReactDOM from 'react-dom'
-import Error from '../assets/error'
-import Success from '../assets/successful'
+import Error from '@/assets/error'
+import Success from '@/assets/successful'
 
 function Notice({ type, msg }) {
   switch (type) {

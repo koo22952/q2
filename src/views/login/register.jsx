@@ -1,9 +1,9 @@
 import React, { useState } from 'react'
 import { Link, useHistory } from 'react-router-dom'
-import Input from '../../components/input'
 import axios from 'axios'
-import loading from '../../components/loading'
-import toast from '../../components/toast'
+import Input from '@/components/input'
+import loading from '@/components/loading'
+import toast from '@/components/toast'
 
 function Register(props) {
   const history = useHistory()

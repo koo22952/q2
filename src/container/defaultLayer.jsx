@@ -1,7 +1,7 @@
 import React, { Suspense, useEffect } from 'react'
 import { Route, Switch, Redirect, useHistory } from 'react-router-dom'
-import Header from './header'
-import { routes } from '../routes'
+import Header from '@/container/header'
+import { routes } from '@/routes'
 
 function DefaultLayer(props) {
   const history = useHistory()

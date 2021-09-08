@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
-import EyesOff from '../assets/eyes-off'
-import EyesOn from '../assets/eyes-on'
+import EyesOff from '@/assets/eyes-off'
+import EyesOn from '@/assets/eyes-on'
 
 /*
   className  整體外框可添加的 className
