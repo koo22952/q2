@@ -4,6 +4,7 @@ import { Link, useHistory } from 'react-router-dom'
 import Input from '@/components/input'
 import loading from '@/components/loading'
 import toast from '@/components/toast'
+import { login } from '@api'
 
 function Login(props) {
   const [form, setForm] = useState({
@@ -28,24 +29,25 @@ function Login(props) {
       return
     }
 
-    await axios
-      .post('/api/login', {
-        username: form.username,
-        password: form.password,
-      })
-      .then(({ data }) => {
+    loading.start()
+
+    await login({
+      username: form.username,
+      password: form.password,
+    })
+      .then(async ({ data }) => {
+        console.log(data, '1111')
         if (data.success) {
           localStorage.setItem('userToken', data.token)
-          toast.success(data.message)
-        } else {
-          toast.error(data.message)
+          await toast.success(data.message)
+          await history.push('/')
         }
       })
       .catch((err) => {
         console.log(err)
         localStorage.removeItem('userToken')
       })
-      .finally(() => history.push('/'))
+      .finally(() => loading.end())
   }
 
   return (

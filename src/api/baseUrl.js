@@ -1,4 +1,5 @@
 import axios from 'axios'
+import toast from '@/components/toast'
 
 export const request = axios.create({
   baseURL: 'https://l8-upgrade-apis.vercel.app/api',
@@ -32,12 +33,16 @@ request.interceptors.response.use(
   },
   (error) => {
     // 相對應錯誤處理
-    switch (error.response?.status) {
+    const resp = error.response
+
+    switch (resp?.status) {
       case 401:
       case 403:
       case 500:
+        toast.error(resp?.data?.message)
+        break
       default:
-        console.log('就是發生了錯誤！')
+        toast.error('就是發生了錯誤！')
     }
     return Promise.reject(error.response)
   }

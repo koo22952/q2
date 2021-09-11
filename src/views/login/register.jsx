@@ -1,9 +1,14 @@
 import React, { useState } from 'react'
 import { Link, useHistory } from 'react-router-dom'
-import axios from 'axios'
 import Input from '@/components/input'
 import loading from '@/components/loading'
 import toast from '@/components/toast'
+import { register } from '@api'
+
+/*
+todo
+  1. 等待執行規則，註冊成功後，理應要等toast結束才跳轉頁面
+ */
 
 function Register(props) {
   const history = useHistory()
@@ -16,45 +21,18 @@ function Register(props) {
   const fetchRegister = async () => {
     loading.start()
 
-    await axios
-      .post('/api/register', {
-        username: form.username?.value,
-        password: form.password?.value,
-      })
-      .then(({ data }) => {
+    await register({
+      username: form.username?.value,
+      password: form.password?.value,
+    })
+      .then(async ({ data }) => {
         if (data.success) {
-          toast.success(data.message)
-          fetchLogin()
-        } else {
-          toast.error(data.message)
+          await toast.success(data.message)
+          await history.push('/')
         }
       })
-      .catch((err) => {
-        console.log(err)
-        localStorage.removeItem('userToken')
-      })
+      .catch((err) => console.log(err))
       .finally(() => loading.end())
-  }
-
-  const fetchLogin = async () => {
-    await axios
-      .post('/api/login', {
-        username: form.username?.value,
-        password: form.password?.value,
-      })
-      .then(({ data }) => {
-        if (data.success) {
-          localStorage.setItem('userToken', data.token)
-        } else {
-          toast.error(data.message)
-          history.push('/login')
-        }
-      })
-      .catch((err) => {
-        console.log(err)
-        localStorage.removeItem('userToken')
-      })
-      .finally(() => history.push('/'))
   }
 
   const checkValidatorRule = (value, name) => {
