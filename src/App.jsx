@@ -10,8 +10,8 @@ import {
 const DefaultLayout = lazy(() => import('./container/defaultLayer'))
 
 // 基礎頁面
-const Login = lazy(() => import('./views/login/login.jsx'))
-const Register = lazy(() => import('./views/login/register.jsx'))
+const Login = lazy(() => import('./views/account/login.jsx'))
+const Register = lazy(() => import('./views/account/register.jsx'))
 const View404 = lazy(() => import('./views/Others/404'))
 
 function App() {
