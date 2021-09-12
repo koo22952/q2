@@ -7,6 +7,7 @@ import toast from '@/components/toast'
 import { login } from '@api'
 
 function Login(props) {
+  const history = useHistory()
   const [form, setForm] = useState({
     username: '',
     password: '',
@@ -36,7 +37,6 @@ function Login(props) {
       password: form.password,
     })
       .then(async ({ data }) => {
-        console.log(data, '1111')
         if (data.success) {
           localStorage.setItem('userToken', data.token)
           await toast.success(data.message)
