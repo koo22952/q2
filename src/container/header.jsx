@@ -3,8 +3,18 @@ import { Link, useHistory } from 'react-router-dom'
 import Menu from '@/assets/menu'
 import Bell from '@/assets/bell'
 import Logout from '@/assets/logout'
+import toast from '@/components/toast'
 
 function Header(props) {
+  const history = useHistory()
+
+  const onLogout = () => {
+    localStorage.removeItem('userToken')
+    history.push('/')
+    toast.success('登出成功')
+  }
+
+
   return (
     <header className='flex items-center justify-between bg-white px-4 py-2 border-b'>
       <div className='flex items-center	'>
@@ -31,7 +41,7 @@ function Header(props) {
           </button>
           <div className='text-sm'>AA軍 <span>(email)</span></div>
         </div>
-        <button className='flex focus:outline-none ml-4'>
+        <button className='flex focus:outline-none ml-4' onClick={onLogout}>
           <Logout />
         </button>
       </div>
