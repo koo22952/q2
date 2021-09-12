@@ -1,7 +1,9 @@
 import React, { Suspense, useEffect } from 'react'
 import { Route, Switch, Redirect, useHistory } from 'react-router-dom'
-import Header from '@/container/header'
 import { routes } from '@/routes'
+import Header from '@/container/header'
+import Aside from '@/container/aside'
+
 
 function DefaultLayer(props) {
   const history = useHistory()
@@ -18,26 +20,32 @@ function DefaultLayer(props) {
 
   return (
     // 內高度由組件自行決定 父flex / 子flex1 撐滿
-    <div className="w-full h-screen flex flex-col">
+    <div className='w-full h-screen flex flex-col'>
       <Header />
-      <Suspense fallback={() => <span>Loading</span>}>
-        <Switch>
-          {routes.map((r) => {
-            return (
-              <Route
-                key={r.path}
-                path={r.path}
-                exact={r.exact}
-                render={(props) => {
-                  return <r.component {...props} />
-                }}
-              />
-            )
-          })}
-          {/*無匹配重導項位置*/}
-          <Redirect to="/404" />
-        </Switch>
-      </Suspense>
+      {/*開：ml-32 闔：ml-14*/}
+      <div className='flex flex-1'>
+        <Aside />
+        <div className='flex-1'>
+          <Suspense fallback={() => <span>Loading</span>}>
+            <Switch>
+              {routes.map((r) => {
+                return (
+                  <Route
+                    key={r.path}
+                    path={r.path}
+                    exact={r.exact}
+                    render={(props) => {
+                      return <r.component {...props} />
+                    }}
+                  />
+                )
+              })}
+              {/*無匹配重導項位置*/}
+              <Redirect to='/404' />
+            </Switch>
+          </Suspense>
+        </div>
+      </div>
     </div>
   )
 }
