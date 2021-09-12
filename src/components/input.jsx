@@ -14,29 +14,29 @@ import EyesOn from '@/assets/eyes-on'
 */
 
 function Input({
-  className,
-  label,
-  labelClassName,
-  placeholder = '',
-  name,
-  InputType,
-  showEye = false,
-  required = false,
+                 className,
+                 label,
+                 labelClassName,
+                 placeholder = '',
+                 name,
+                 InputType,
+                 showEye = false,
+                 required = false,
 
-  onChange,
-  verify,
-  isUse = false, //是否有輸入過
-}) {
+                 onChange,
+                 verify,
+                 isUse = false, //是否有輸入過
+               }) {
   const [look, setLook] = useState(false)
 
   return (
     <div className={`relative flex items-baseline w-full ${className}`}>
-      {required && <span className="text-red-500">*</span>}
+      <span className={`${required ? 'text-red-500' : 'opacity-0'}`}>*</span>
       <label className={`mr-4 ${labelClassName}`} htmlFor={name}>
         {label}
       </label>
-      <div className="flex-1 relative">
-        <div className="relative">
+      <div className='flex-1 relative'>
+        <div className='relative'>
           <input
             id={name}
             type={showEye ? (look ? 'text' : 'password') : InputType}
@@ -49,25 +49,25 @@ function Input({
             onChange={(e) => onChange(e.target.value, name)}
           />
           {showEye &&
-            (look ? (
-              <div
-                className="h-5 w-5 absolute top-1/2 right-4 transform -translate-y-1/2 cursor-pointer"
-                onClick={() => setLook(!look)}
-              >
-                <EyesOn />
-              </div>
-            ) : (
-              <div
-                className="h-5 w-5 absolute top-1/2 right-4 transform -translate-y-1/2 cursor-pointer"
-                onClick={() => setLook(!look)}
-              >
-                <EyesOff />
-              </div>
-            ))}
+          (look ? (
+            <div
+              className='h-5 w-5 absolute top-1/2 right-4 transform -translate-y-1/2 cursor-pointer'
+              onClick={() => setLook(!look)}
+            >
+              <EyesOn />
+            </div>
+          ) : (
+            <div
+              className='h-5 w-5 absolute top-1/2 right-4 transform -translate-y-1/2 cursor-pointer'
+              onClick={() => setLook(!look)}
+            >
+              <EyesOff />
+            </div>
+          ))}
         </div>
 
         {!verify?.isPass && required ? (
-          <div className="text-red-500 text-sm">{verify?.message}</div>
+          <div className='text-red-500 text-sm'>{verify?.message}</div>
         ) : null}
       </div>
     </div>
