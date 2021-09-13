@@ -1,13 +1,21 @@
 import React, { useEffect, useState } from 'react'
-import axios from 'axios'
 import { Link, useHistory } from 'react-router-dom'
 import Input from '@/components/input'
 import loading from '@/components/loading'
 import toast from '@/components/toast'
 import { login } from '@api'
+import { useSelector, useDispatch } from 'react-redux'
+import { update } from '@/store/features/account'
 
 function Login(props) {
   const history = useHistory()
+  const dispatch = useDispatch()
+  const account = useSelector((state) => {
+    return state.account.username
+  })
+
+
+
   const [form, setForm] = useState({
     username: '',
     password: '',
@@ -38,9 +46,10 @@ function Login(props) {
     })
       .then(async ({ data }) => {
         if (data.success) {
+          dispatch(update(data.data))
           localStorage.setItem('userToken', data.token)
           await toast.success(data.message)
-          await history.push('/')
+          // await history.push('/')
         }
       })
       .catch((err) => {
@@ -52,34 +61,34 @@ function Login(props) {
 
   return (
     <>
-      <div className="flex items-center justify-center min-h-screen bg-gray-100">
-        <div className="w-520	p-8 m-8  bg-white shadow-md rounded-md">
-          <div className="font-bold text-2xl text-center mb-4">登入</div>
+      <div className='flex items-center justify-center min-h-screen bg-gray-100'>
+        <div className='w-520	p-8 m-8  bg-white shadow-md rounded-md'>
+          <div className='font-bold text-2xl text-center mb-4'>登入</div>
           <Input
-            className="mb-4"
-            label="帳號"
-            name="username"
-            InputType="text"
-            placeholder="請輸入帳號"
+            className='mb-4'
+            label='帳號'
+            name='username'
+            InputType='text'
+            placeholder='請輸入帳號'
             onChange={onChange}
           />
           <Input
-            className="mb-4"
-            label="密碼"
-            name="password"
-            InputType="password"
-            placeholder="請輸入密碼"
+            className='mb-4'
+            label='密碼'
+            name='password'
+            InputType='password'
+            placeholder='請輸入密碼'
             showEye
             onChange={onChange}
           />
-          <div className="text-center mt-6">
-            <div className="text-center mb-4">
-              <Link className="text-blue-500 text-sm" to={'/register'}>
+          <div className='text-center mt-6'>
+            <div className='text-center mb-4'>
+              <Link className='text-blue-500 text-sm' to={'/register'}>
                 註冊
               </Link>
             </div>
             <button
-              className="px-8 py-2 bg-blue-700 rounded-md text-white hover:bg-blue-800"
+              className='px-8 py-2 bg-blue-700 rounded-md text-white hover:bg-blue-800'
               onClick={onSubmit}
             >
               登入
